@@ -45,6 +45,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\WaveSpawner.cs" />
      <Compile Include="Assets\_Scripts\BackGoundScroller.cs" />
      <Compile Include="Assets\_Scripts\DestroyByBoundary.cs" />
      <Compile Include="Assets\_Scripts\DestroyByContact.cs" />
@@ -54,6 +55,7 @@
      <Compile Include="Assets\_Scripts\PlayerController.cs" />
      <Compile Include="Assets\_Scripts\RandomRotator.cs" />
      <Compile Include="Assets\_Scripts\RandomSprite.cs" />
+     <Compile Include="Assets\_Scripts\StayOnPlayer.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

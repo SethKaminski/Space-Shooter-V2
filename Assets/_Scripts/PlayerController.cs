@@ -13,7 +13,9 @@ public class PlayerController : MonoBehaviour {
 	public float tilt;
 	public Boundary boundary;
 	
-	public GameObject shot;
+	public GameObject[] shots;
+	public int shotting;
+	public GameObject[] PowerUps;
 	public Transform shotSpawn;
 	
 	public float fireRate = 0.5F;
@@ -31,7 +33,7 @@ public class PlayerController : MonoBehaviour {
 		if (Input.GetButton("Fire1") && Time.time > nextFire)
 		{
 			nextFire = Time.time + fireRate;
-			Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+			Instantiate(shots[shotting], shotSpawn.position, shotSpawn.rotation);
 			nextFire = Time.time + fireRate;
 		}
 	}
@@ -49,5 +51,30 @@ public class PlayerController : MonoBehaviour {
 				Mathf.Clamp(rb.position.x, boundary.xMin, boundary.xMax),
 				Mathf.Clamp(rb.position.y, boundary.yMin, boundary.yMax)
 			);
+	}
+
+	void OnTriggerEnter2D(Collider2D other) {
+		if(other.tag == "PowerUp")
+		{
+			if (shotting < shots.Length - 1)
+			{
+				shotting++;
+				UpdateShot();
+				GetComponent<AudioSource>().Play();
+				Destroy(other.gameObject);
+			}
+		}
+	}
+
+	void UpdateShot()
+	{
+		for (int i = 0; i < PowerUps.Length; i++)
+		{
+			if (PowerUps[i].activeSelf)
+			{
+				PowerUps[i].SetActive(false);
+			}
+		}
+		PowerUps[shotting].SetActive(true);
 	}
 }
