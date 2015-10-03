@@ -36,12 +36,9 @@ public class GameController : MonoBehaviour
 
 	void Update()
 	{
-		if(restart)
+		if(Input.GetKeyDown(KeyCode.R))
 		{
-			if(Input.GetKeyDown(KeyCode.R))
-			{
-				Application.LoadLevel(Application.loadedLevel);
-			}
+			Application.LoadLevel(Application.loadedLevel);
 		}
 	}
 
