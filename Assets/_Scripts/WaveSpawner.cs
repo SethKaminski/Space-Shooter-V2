@@ -5,7 +5,7 @@ using System.Collections;
 public class Wave
 {
 	public string Name;
-	public GameObject enemy;
+	public GameObject[] enemys;
 	public int enemyCount;
 	public float spawnRate;
 }
@@ -101,7 +101,7 @@ public class WaveSpawner : MonoBehaviour
 
 		for (int i = 0; i < _wave.enemyCount; i++)
 		{
-			SpawnEnemy(_wave.enemy);
+			SpawnEnemy(_wave.enemys[Random.Range(0,_wave.enemys.Length)]);
 			yield return new WaitForSeconds(1.0f / _wave.spawnRate);
 		}
 

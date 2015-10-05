@@ -10,8 +10,11 @@ public class Boundary
 public class PlayerController : MonoBehaviour {
 	
 	public float speed;
-	public float tilt;
 	public Boundary boundary;
+	public int Damge;
+	public int MaxDamge;
+
+	public GameObject[] DamgeMarks;
 	
 	public GameObject[] shots;
 	public int shotting;
@@ -23,9 +26,22 @@ public class PlayerController : MonoBehaviour {
 	private Rigidbody2D rb;
 	private float nextFire = 0.0F;
 	
+	private GameController gameController;
+
 	void Start()
 	{
+		GameObject gameControllerObject = GameObject.FindGameObjectWithTag("GameController");
+		if (gameControllerObject != null)
+		{
+			gameController = gameControllerObject.GetComponent<GameController>();
+		}
+		else
+		{
+			Debug.Log("Cannot find 'GameController' script");
+		}
+
 		rb = GetComponent<Rigidbody2D>();
+		UpdateShot();
 	}
 	
 	void Update()
@@ -60,7 +76,7 @@ public class PlayerController : MonoBehaviour {
 			{
 				shotting++;
 				UpdateShot();
-				GetComponent<AudioSource>().Play();
+				GetComponents<AudioSource>()[0].Play();
 				Destroy(other.gameObject);
 			}
 		}
@@ -76,5 +92,37 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 		PowerUps[shotting].SetActive(true);
+	}
+
+	public void AddDamge(int add)
+	{
+		GetComponents<AudioSource>()[1].Play();
+		if (Damge + add >= MaxDamge)
+		{
+			Destroy(this.gameObject);
+			gameController.GameOver();
+		}
+		else
+		{
+			Damge += add;
+			UpdateDamge();
+		}
+
+	}
+
+	void UpdateDamge ()
+	{
+		for (int i = 0; i < DamgeMarks.Length; i++)
+		{
+			if (DamgeMarks[i].activeSelf)
+			{
+				DamgeMarks[i].SetActive(false);
+			}
+		}
+
+		if (Damge != 0)
+		{
+			DamgeMarks[Damge - 1 ].SetActive(true);
+		}
 	}
 }
